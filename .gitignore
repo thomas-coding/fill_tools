@@ -1,0 +1,20 @@
+# Local assistant and session files
+.opencode/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Build outputs
+build/
+dist/
+
+# Runtime generated files
+wechat_form_data.tsv
+wechat_form_progress.tsv
+wechat_source_meta.txt
+wechat_extracted_images/
+
+# OS artifacts
+Thumbs.db
+.DS_Store
