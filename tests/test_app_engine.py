@@ -80,6 +80,11 @@ class AppEngineTests(unittest.TestCase):
             self.assertEqual(result.mode, "patrol")
             self.assertEqual(result.total_records, 2)
 
+            lines = result.paths.data_tsv.read_text(encoding="utf-8").splitlines()
+            first = lines[1].split("\t")
+            self.assertEqual(first[1], "环湖西三路")
+            self.assertEqual(first[2], "近申港大道")
+
             done, total = progress_stats(result.paths.progress_tsv)
             self.assertEqual(total, 2)
             self.assertEqual(done, 1)

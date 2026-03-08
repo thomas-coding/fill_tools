@@ -678,10 +678,16 @@ def _parse_patrol(
         if not photo:
             photo = _find_fallback_extracted_image(source_dir, data_row, col_photo)
 
+        address_value = ""
+        if col_road is not None:
+            address_value = norm(ws.cell(data_row, col_road).value)
+        elif col_location is not None:
+            address_value = norm(ws.cell(data_row, col_location).value)
+
         records.append(
             Record(
                 source_row=data_row,
-                address=norm(ws.cell(data_row, col_location).value) if col_location else norm(ws.cell(data_row, col_road).value),
+                address=address_value,
                 section=norm(ws.cell(data_row, col_section).value),
                 deadline=norm(ws.cell(data_row, col_deadline).value)
                 if (col_deadline and fill_profile != FILL_PROFILE_PATROL2)

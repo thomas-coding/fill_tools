@@ -51,3 +51,16 @@
 
 - 单元测试：`python -m unittest discover -s tests -v` 通过
 - 打包运行冒烟：`盛丹的小工具.exe` 可启动，进程可正常结束
+
+## 离线自测（无需登录小程序）
+
+- 用途：快速验证“字段映射是否正确、图片是否成功提取”。
+- 命令：`python offline_smoke_check.py "你的Excel路径.xlsx"`
+- 一键方式（PowerShell）：`.\offline_smoke_check.cmd "你的Excel路径.xlsx"`（也可把 Excel 直接拖到 `.cmd` 上）
+- 默认会同时验证 `巡检填报1 + 巡检填报2`，并输出：
+  - 字段校验 PASS/FAIL（逐行对比源表）
+  - 图片校验 PASS/FAIL（文件存在、非空、图片头有效）
+- 常用参数：
+  - 仅测填报1：`--profile patrol1`
+  - 仅测填报2：`--profile patrol2`
+  - 保留提取目录以便人工核图：`--keep-session`
