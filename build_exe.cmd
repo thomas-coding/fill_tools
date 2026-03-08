@@ -12,6 +12,17 @@ if not exist "%PY310%" (
 
 pushd "%~dp0"
 
+echo.
+echo Running release preflight checks...
+"%PY310%" "release_preflight.py"
+
+if errorlevel 1 (
+  echo.
+  echo Preflight checks failed. Build aborted.
+  popd
+  exit /b 1
+)
+
 "%PY310%" -m PyInstaller ^
   --noconfirm ^
   --clean ^

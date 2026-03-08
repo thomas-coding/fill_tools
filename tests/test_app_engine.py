@@ -1,5 +1,6 @@
 import tempfile
 import unittest
+from datetime import datetime
 from pathlib import Path
 from unittest.mock import patch
 
@@ -16,6 +17,12 @@ from app_engine import (
 
 
 class AppEngineTests(unittest.TestCase):
+    @staticmethod
+    def _timestamp_text(value):
+        if isinstance(value, datetime):
+            return value.strftime("%Y-%m-%d %H:%M:%S")
+        return "" if value is None else str(value)
+
     def test_supported_extension_check(self):
         self.assertTrue(is_supported_excel(Path("a.xlsx")))
         self.assertTrue(is_supported_excel(Path("a.xlsm")))
@@ -181,7 +188,7 @@ class AppEngineTests(unittest.TestCase):
             assert ws2 is not None
             self.assertEqual(ws2.cell(4, 16).value, "10")
             self.assertEqual(ws2.cell(4, 17).value, "已填")
-            self.assertEqual(ws2.cell(4, 18).value, "2026-03-06 11:05:00")
+            self.assertEqual(self._timestamp_text(ws2.cell(4, 18).value), "2026-03-06 11:05:00")
 
             cleanup_session_dir(result.paths.session_dir)
 
@@ -260,9 +267,9 @@ class AppEngineTests(unittest.TestCase):
             self.assertEqual(ws2.cell(1, 19).value, "填报2状态")
             self.assertEqual(ws2.cell(1, 20).value, "填报2提交时间")
             self.assertEqual(ws2.cell(2, 17).value, "已填")
-            self.assertEqual(ws2.cell(2, 18).value, "2026-03-06 10:00:00")
+            self.assertEqual(self._timestamp_text(ws2.cell(2, 18).value), "2026-03-06 10:00:00")
             self.assertEqual(ws2.cell(2, 19).value, "已填")
-            self.assertEqual(ws2.cell(2, 20).value, "2026-03-06 11:20:00")
+            self.assertEqual(self._timestamp_text(ws2.cell(2, 20).value), "2026-03-06 11:20:00")
 
             cleanup_session_dir(result.paths.session_dir)
 

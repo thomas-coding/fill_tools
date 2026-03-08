@@ -52,6 +52,17 @@
 - 单元测试：`python -m unittest discover -s tests -v` 通过
 - 打包运行冒烟：`盛丹的小工具.exe` 可启动，进程可正常结束
 
+## 发布前门禁（必跑）
+
+- 一键命令：`python release_preflight.py`
+- PowerShell 可用：`.\release_preflight.cmd`
+- 默认回归样本：`浦港养护2026年3月8日巡查问题处置日报.xlsx`
+- 门禁内容：
+  - 全量单元测试
+  - 离线自测（填报1+填报2，字段校验+图片校验）
+- 任何一步失败即阻断发布；`build_exe.cmd` 已内置该门禁。
+- 人工测试与留痕要求见：`RELEASE_CHECKLIST.md`
+
 ## 离线自测（无需登录小程序）
 
 - 用途：快速验证“字段映射是否正确、图片是否成功提取”。
